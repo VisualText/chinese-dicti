@@ -1,0 +1,2 @@
+# chinese-dicti
+Chinese Dictionary
