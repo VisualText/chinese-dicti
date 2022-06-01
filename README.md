@@ -1,2 +1,2 @@
-# chinese-dict
+# dict-zh
 Chinese Dictionary
