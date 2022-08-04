@@ -1,0 +1,47 @@
+import os
+import re
+path = os.path.dirname(os.path.realpath(__file__))
+file = path + '/zhwiktionary-latest-pages-articles-multistream.xml'
+# file = path + '/test.xml'
+folder = ""
+everything = ""
+title = ""
+isPage = False
+newFile = ""
+gotTitle = False
+num = 1
+with open(file, encoding="utf-8") as f:
+    everything = f.readlines()
+    # print(everything)
+# print(line)
+for line in everything:
+    if "<page>" in line.strip('\n'):
+        isPage = True
+    if "</page>" in line.strip('\n'):
+        isPage = False
+        gotTitle = False
+        # print(everything)
+        # print(title)
+
+    # reset everything
+
+    # everything = ""
+
+    if isPage:
+        if gotTitle:
+            newFile.write(line)
+        if '<title>' in line.strip('\n'):
+            title = line[line.find("<title>")+7:line.find("</title>")]
+            title = re.findall(r'[\u4e00-\u9fd5]+', title)
+            # print(title)
+            if len(title) > 0:
+                name = "c" + str(num)
+                num += 1
+                newFile = open(os.path.dirname(os.path.realpath(__file__)) + "/output/" + name + ".txt", "a+")
+                newFile.write(line)
+                gotTitle = True
+            else:
+                gotTitle = False
+print(num)
+
+# print(file)
